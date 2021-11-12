@@ -1,4 +1,5 @@
 import type { JsonFragment } from '@ethersproject/abi'
+import { Response } from 'got/dist/source'
 
 import type { EthSdkConfig } from './config/types'
 import type { EthSdkCliArgs } from './parseArgs'
@@ -22,3 +23,8 @@ export interface EthSdkCtx {
 export interface Abi extends Array<JsonFragment> {}
 
 export type { JsonFragment }
+
+/**
+ * @internal
+ */
+export type Fetch = (url: string) => Promise<Pick<Response<string>, 'body'>>

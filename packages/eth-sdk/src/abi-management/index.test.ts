@@ -44,6 +44,7 @@ describe(gatherABIs.name, () => {
         etherscanKey: etherscanKeyFixture,
         etherscanURLs: {},
         rpc: {},
+        abiSource: 'etherscan',
       },
       fs,
     }
@@ -52,7 +53,7 @@ describe(gatherABIs.name, () => {
 
     expect(fs.test.isDirectory('workdirPath/abis/kovan')).toEqual(true)
     expect(fs.test.readJson('workdirPath/abis/kovan/dai.json')).toEqual(abi)
-    expect(getAbi).toHaveBeenCalledWith(['kovan', contracts.kovan.dai, etherscanKeyFixture, {}])
+    expect(getAbi).toHaveBeenCalledWith(['kovan', contracts.kovan.dai])
   })
 
   it('uses implementation abi instead of proxy abi', async () => {
@@ -64,13 +65,11 @@ describe(gatherABIs.name, () => {
     }
     const ctx: EthSdkCtx = {
       cliArgs: { workingDirPath: 'workdirPath' },
-      config: {
+      config: createEthSdkConfig({
         contracts,
         outputPath: 'outputPath',
         etherscanKey: etherscanKeyFixture,
-        etherscanURLs: {},
-        rpc: {},
-      },
+      }),
       fs,
     }
     const abis = constrain<Dictionary<Abi>>()({
